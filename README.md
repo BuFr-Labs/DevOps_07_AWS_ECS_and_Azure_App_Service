@@ -45,11 +45,11 @@ git push origin main
 
 Průběh a logy z provádění příkazů terraform init, terraform validate a terraform apply lze sledovat živě v záložce Actions ve tvém GitHub repozitáři.
 
-8### 3. Ověření funkčnosti
+### 3. Ověření funkčnosti
 Po úspěšném doběhnutí pipeline vypíše krok Test Application a Outputs unikátní URL adresu Load Balanceru. Aplikaci lze ověřit v prohlížeči nebo pomocí terminálu:
 
 ```Bash
-curl [http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com](http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com)
+curl http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com
 ```
 
 Výstupem úspěšného ověření je standardní uvítací stránka Nginx prostředí.
