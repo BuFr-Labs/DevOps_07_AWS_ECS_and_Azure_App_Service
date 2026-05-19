@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    # Zde zadej REÁLNÝ název tvého ručně vytvořeného S3 bucketu
+    # Zde zadej REALNY nazev tveho rucne vytvoreneho S3 bucketu
     bucket = "tfstate-bufr-devops-ukol7" 
     key    = "ecs-demo/terraform.tfstate"
     region = "eu-central-1"

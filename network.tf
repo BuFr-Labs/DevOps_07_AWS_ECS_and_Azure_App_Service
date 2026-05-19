@@ -1,9 +1,9 @@
-# Načtení informací o výchozí (defaultní) VPC v regionu eu-central-1
+# Nacteni informaci o vychozi (defaultni) VPC v regionu eu-central-1
 data "aws_vpc" "myvpc" {
   default = true
 }
 
-# Načtení všech podsítí (subnets), které k této výchozí VPC patří
+# Nacteni vsech podsiti (subnets), ktere k teto vychozi VPC patri
 data "aws_subnets" "public" {
   filter {
     name   = "vpc-id"

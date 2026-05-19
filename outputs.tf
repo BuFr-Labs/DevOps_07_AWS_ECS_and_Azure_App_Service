@@ -1,9 +1,9 @@
 output "load_balancer_dns" {
-  description = "Čistý DNS název přidělený Load Balanceru od AWS"
+  description = "Cisty DNS nazev pridelely Load Balanceru od AWS"
   value       = aws_lb.main.dns_name
 }
 
 output "load_balancer_url" {
-  description = "Kompletní URL adresa pro otestování Nginx aplikace v prohlížeči nebo přes curl"
+  description = "Kompletni URL adresa pro otestovani Nginx aplikace v prohlizeci nebo pres curl"
   value       = "http://${aws_lb.main.dns_name}"
 }

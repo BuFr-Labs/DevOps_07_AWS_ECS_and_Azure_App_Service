@@ -6,6 +6,6 @@ variable "aws_region" {
 
 variable "project_name" {
   type        = string
-  description = "Prefix pro názvy všech vytvářených prostředků"
+  description = "Prefix pro nazvy vsech vytvarenych prostredku"
   default     = "ecs-nginx-demo"
 }

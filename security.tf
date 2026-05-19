@@ -1,10 +1,10 @@
 # Security Group pro Application Load Balancer (ALB)
 resource "aws_security_group" "alb" {
   name        = "${var.project_name}-alb-sg"
-  description = "Security group for ALB - umožňuje přístup z internetu"
+  description = "Security group for ALB - umoznuje pristup z internetu"
   vpc_id      = data.aws_vpc.myvpc.id
   
-  # Povolujeme příchozí HTTP provoz na portu 80 z jakékoliv IP adresy na světě
+  # Povolujeme prichozi HTTP provoz na portu 80 z jakékoliv IP adresy na svete
   ingress {
     from_port   = 80
     to_port     = 80
@@ -12,7 +12,7 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   
-  # Povolujeme veškerý odchozí provoz (např. pro stahování aktualizací z internetu)
+  # Povolujeme veskery odchozi provoz (napr. pro stahovani aktualizaci z internetu)
   egress {
     from_port   = 0
     to_port     = 0
@@ -25,13 +25,13 @@ resource "aws_security_group" "alb" {
   }
 }
 
-# Security Group pro samotné ECS úkoly (Nginx kontejnery)
+# Security Group pro samotne ECS ukoly (Nginx kontejnery)
 resource "aws_security_group" "ecs_tasks" {
   name        = "${var.project_name}-ecs-tasks-sg"
-  description = "Security group for ECS tasks - povluje provoz POUZE z ALB"
+  description = "Security group for ECS tasks - povoluje provoz POUZE z ALB"
   vpc_id      = data.aws_vpc.myvpc.id
   
-  # KLÍČOVÉ MÍSTO: Příchozí provoz na port 80 je povolen POUZE pokud přichází přes ALB SG
+  # KLICOVE MISTO: Prichozi provoz na port 80 je povolen POUZE pokud prichazi pres ALB SG
   ingress {
     from_port       = 80
     to_port         = 80
@@ -39,7 +39,7 @@ resource "aws_security_group" "ecs_tasks" {
     security_groups = [aws_security_group.alb.id]
   }
   
-  # Povolujeme odchozí provoz (Fargate kontejner si tudy bude stahovat Nginx obraz z Docker Hubu)
+  # Povolujeme odchozi provoz (Fargate kontejner si tudy bude stahovat Nginx obraz z Docker Hubu)
   egress {
     from_port   = 0
     to_port     = 0
