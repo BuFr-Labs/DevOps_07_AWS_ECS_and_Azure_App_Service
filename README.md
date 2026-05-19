@@ -1,66 +1,65 @@
 # DevOps_07_AWS_ECS_and_Azure_App_Service
 Repozitoř k 7. lekci
 
-# DevOps Ukol 07: Automatizovane nasazeni ECS Fargate pomoci Terraform a GitHub Actions
+# DevOps Úkol 07: Automatizované nasazení ECS Fargate pomocí Terraformu a GitHub Actions
 
-Tento repozitar obsahuje reseni domaciho ukolu zamereneho na automatizaci nasazeni kontejnerizovane aplikace Nginx do AWS sluzby ECS Fargate s vyuzitim CI/CD pipeline v GitHub Actions.
+Tento repozitář obsahuje řešení domácího úkolu zaměřeného na automatizaci nasazení kontejnerizované aplikace Nginx do AWS služby ECS Fargate s využitím CI/CD pipeline v GitHub Actions.
 
-## 🎯 Cile projektu
-* Automaticke vytvoreni AWS ECS Fargate clusteru a prislusne sluzby (Service).
-* Nasazeni oficialniho Docker obrazu `nginx:alpine` do bezserveroveho (serverless) prostredi.
-* Vytvoreni verejne dostupneho Application Load Balanceru (ALB) pro distribuci provozu.
-* Dynamicke nacteni existujici vychozi VPC a public subnetu pomoci `data` bloku.
-* Konfigurace dvoji urovne zabezpeceni pomoci Security Groups (ALB pristupny z internetu, ECS tasky pristupne vyhradne z ALB).
-* Nastaveni centralniho sberu logu do sluzby AWS CloudWatch Log Group s retenci 7 dni.
-* Kompletní automatizace celeho lifecycle prostredi pomoci GitHub Actions workflow.
+## 🎯 Cíle projektu
+* Automatické vytvoření AWS ECS Fargate clusteru a příslušné služby (Service).
+* Nasazení oficiálního Docker obrazu `nginx:alpine` do bezserverového (serverless) prostředí.
+* Vytvoření veřejně dostupného Application Load Balanceru (ALB) pro distribuci provozu.
+* Dynamické načtení existující výchozí VPC a veřejných podsítí (public subnets) pomocí `data` bloků.
+* Konfigurace dvojí úrovně zabezpečení pomocí Security Groups (ALB přístupný z internetu, ECS tasky přístupné výhradně z ALB).
+* Nastavení centrálního sběru logů do služby AWS CloudWatch Log Group s retencí 7 dní.
+* Kompletní automatizace celého lifecycle prostředí pomocí GitHub Actions workflow.
 
 ## 📂 Struktura projektu
-Projekt striktne dodrzuje modularni rozdeleni podle "Best Practices" pro Terraform a CI/CD:
+Projekt striktně dodržuje modulární rozdělení podle "Best Practices" pro Terraform a CI/CD:
 
-* `.github/workflows/deploy.yml` - Definice GitHub Actions pipeline (autentizace do AWS, inicializace, validace a automaticky apply).
-* `providers.tf` - Konfigurace AWS providera a vzdaleneho ukladani stavu (S3 Backend).
-* `variables.tf` - Definice vstupnich promennych (AWS region, project prefix).
-* `network.tf` - Data zdroje pro vyhledani a vyuziti vychozi sitove infrastruktury v AWS.
-* `security.tf` - Definice bezpecnostnich skupin pro striktni rizeni sitoveho provozu.
+* `.github/workflows/deploy.yml` - Definice GitHub Actions pipeline (autentizace do AWS, inicializace, validace a automatické nasazení).
+* `providers.tf` - Konfigurace AWS providera a vzdáleného ukládání stavu (S3 Backend).
+* `variables.tf` - Definice vstupních proměnných (AWS region, project prefix).
+* `network.tf` - Data zdroje pro vyhledání a využití výchozí síťové infrastruktury v AWS.
+* `security.tf` - Definice bezpečnostních skupin pro striktní řízení síťového provozu.
 * `alb.tf` - Konfigurace Application Load Balanceru, Target Groupy a HTTP Listeneru.
-* `iam.tf` - Definice IAM role a politik pro spravne provadeni a exekuci ECS tasku.
-* `ecs.tf` - Hlavni definice ECS Clusteru, CloudWatch Log Groupy, Task Definition a ECS Service.
-* `outputs.tf` - Vystupni parametry obsahujici ciste DNS a kompletni URL pro test aplikace.
+* `iam.tf` - Definice IAM role a politik pro správné provádění a exekuci ECS tasků.
+* `ecs.tf` - Hlavní definice ECS Clusteru, CloudWatch Log Groupy, Task Definition a ECS Service.
+* `outputs.tf` - Výstupní parametry obsahující čisté DNS a kompletní URL pro test aplikace.
 
-## 🚀 Navod k pouziti
+## 🚀 Návod k použití
 
 ### 1. Prerekvizity
-* Vytvoreny S3 bucket v AWS pro ukladani stavoveho souboru (`tfstate-bufr-devops-ukol7`).
-* Nastavene GitHub Secrets v repozitari pro bezpecnou autentizaci pipeline:
+* Vytvořený S3 bucket v AWS pro ukládání stavového souboru (`tfstate-bufr-devops-ukol7`).
+* Nastavené GitHub Secrets v repozitáři pro bezpečnou autentizaci pipeline:
   * `AWS_ACCESS_KEY_ID`
   * `AWS_SECRET_ACCESS_KEY`
 
-### 2. Spusteni a automaticke nasazeni
-Pipeline se spousti automaticky pri kazdem pushnuti kodu do vetve `main`.
+### 2. Spuštění a automatické nasazení
+Pipeline se spouští automaticky při každém pushnutí kódu do větve `main`.
 ```bash
 git add .
 git commit -m "feat: inicialni nasazeni ECS Fargate infrastruktury"
 git push origin main
 ```
 
-Prubeh a logy z provadeni prikazu terraform init, validate a apply lze sledovat live v zalozce Actions ve tvem GitHub repozitari.
+Průběh a logy z provádění příkazů terraform init, terraform validate a terraform apply lze sledovat živě v záložce Actions ve tvém GitHub repozitáři.
 
-
-### 3. Overeni funkcnosti
-Po uspesnem dobehnuti pipeline vypise krok Test Application a Outputs unikatni URL adresu Load Balanceru. Aplikaci lze overit v prohlizeci nebo pomoci terminalu:
+8### 3. Ověření funkčnosti
+Po úspěšném doběhnutí pipeline vypíše krok Test Application a Outputs unikátní URL adresu Load Balanceru. Aplikaci lze ověřit v prohlížeči nebo pomocí terminálu:
 
 ```Bash
 curl [http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com](http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com)
 ```
 
-Vystupem uspesneho overeni je standardni uvitaci stranka Nginx prostredi.
+Výstupem úspěšného ověření je standardní uvítací stránka Nginx prostředí.
 
-### 4. Uklid infrastruktury (Cleanup)
-Pro zamezeni zbytecnych nakladu v AWS za bezici Application Load Balancer a Fargate zdroje je nutne po otestovani celou infrastrukturu smazat lokalne z terminalu tve virtualky:
+### 4. Úklid infrastruktury (Cleanup)
+Pro zamezení zbytečných nákladů v AWS za běžící Application Load Balancer a Fargate zdroje je nutné po otestování celou infrastrukturu smazat lokálně z terminálu tvé virtuálky:
 
 ```Bash
 terraform destroy
 ```
 
-### Bezpecnost
-Veskere pristupove klice k AWS jsou ulozeny striktne v GitHub Secrets a nikdy se nenechavaji v kodu. Soubory mistniho stavu a pomocne adresare Terraformu (.terraform/, *.tfstate, terraform.tfvars) jsou zapsany v .gitignore, aby nedoslo k jejich nechtenemu pushnuti na server.
+### Bezpečnost
+Veškeré přístupové klíče k AWS jsou uloženy striktně v GitHub Secrets a nikdy se nenechávají v kódu. Soubory místního stavu a pomocné adresáře Terraformu (.terraform/, *.tfstate, terraform.tfvars) jsou zapsány v .gitignore, aby nedošlo k jejich nechtěnému pushnutí na server.
