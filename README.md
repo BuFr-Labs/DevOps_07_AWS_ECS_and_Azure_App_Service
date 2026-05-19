@@ -39,7 +39,7 @@ Projekt striktně dodržuje modulární rozdělení podle "Best Practices" pro T
 Pipeline se spouští automaticky při každém pushnutí kódu do větve `main`.
 ```bash
 git add .
-git commit -m "feat: inicialni nasazeni ECS Fargate infrastruktury"
+git commit -m "feat: Pridani kompletni struktury pro AWS ECS Fargate a GitHub pipeline"
 git push origin main
 ```
 
