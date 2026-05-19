@@ -49,7 +49,7 @@ Průběh a logy z provádění příkazů terraform init, terraform validate a t
 Po úspěšném doběhnutí pipeline vypíše krok Test Application a Outputs unikátní URL adresu Load Balanceru. Aplikaci lze ověřit v prohlížeči nebo pomocí terminálu:
 
 ```Bash
-curl http://my-ecs-demo-alb-XXXXXXXXX.eu-central-1.elb.amazonaws.com
+curl http://my-ecs-demo-alb-1933658834.eu-central-1.elb.amazonaws.com/
 ```
 
 Výstupem úspěšného ověření je standardní uvítací stránka Nginx prostředí.
